@@ -5,12 +5,12 @@ on:
     branches:
       - main
     paths:
-      - 'terraform/**'
+      - 'terraform/dev/**'
 
 env:
   AWS_REGION: us-east-1
   TF_VERSION: 1.15.4
-  TF_WORKING_DIR: terraform/environments/dev
+  TF_WORKING_DIR: terraform/dev/
 
 jobs:
   terraform-plan:
@@ -57,8 +57,8 @@ jobs:
       - name: Terraform Plan
         run: |
           terraform plan -detailed-exitcode -out=tfplan
-          terraform show -no-color tfplan > tfplan.txt
           exitcode=$?
+          terraform show -no-color tfplan > tfplan.txt
 
           if [ $exitcode -eq 1 ]; then
             echo "Terraform plan failed"
